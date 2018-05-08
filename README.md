@@ -16,7 +16,7 @@ Tags:
 ## Installation
 
 ```
-git clone https://github.com/jmhardison/docker-moodle
+git clone https://github.com/yuchiu/docker-moodle
 cd docker-moodle
 docker build -t moodle .
 ```
@@ -31,7 +31,7 @@ To spawn a new instance of Moodle:
 
 ```
 docker run -d --name DB -p 3306:3306 -e MYSQL_DATABASE=moodle -e MYSQL_ROOT_PASSWORD=moodle -e MYSQL_USER=moodle -e MYSQL_PASSWORD=moodle mysql:5
-docker run -d -P --name moodle --link DB:DB -e MOODLE_URL=http://localhost:8080 -p 8080:80 jhardison/moodle
+docker run -d -P --name moodle --link DB:DB -e MOODLE_URL=http://localhost:8080 -p 8080:80 yuchiu/moodle
 ```
 
 You can visit the following URL in a browser to get started:
@@ -48,7 +48,7 @@ In the following steps, replace MOODLE_URL with your appropriate FQDN.
 * Deploy With Docker
 ```
 docker run -d --name DB -p 3306:3306 -e MYSQL_DATABASE=moodle -e MYSQL_ROOT_PASSWORD=moodle -e MYSQL_USER=moodle -e MYSQL_PASSWORD=moodle mysql:5
-docker run -d -P --name moodle --link DB:DB -e MOODLE_URL=http://moodle.company.com -p 80:80 jhardison/moodle
+docker run -d -P --name moodle --link DB:DB -e MOODLE_URL=http://moodle.company.com -p 80:80 yuchiu/moodle
 ```
 
 * Deploy with Docker Compose
