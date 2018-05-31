@@ -13,14 +13,6 @@ Tags:
 * v3.2 - 3.2 stable
 * v3.1 - 3.1 stable
 
-## Installation
-
-```
-git clone https://github.com/yuchiu/docker-moodle
-cd docker-moodle
-docker build -t moodle .
-```
-
 ## Usage
 
 Test Environment
@@ -30,8 +22,8 @@ When running locally or for a test deployment, use of localhost is acceptable.
 To spawn a new instance of Moodle:
 
 ```
-docker run -d --name DB -p 3306:3306 -e MYSQL_DATABASE=moodle -e MYSQL_ROOT_PASSWORD=moodle -e MYSQL_USER=moodle -e MYSQL_PASSWORD=moodle mysql:5
-docker run -d -P --name moodle --link DB:DB -e MOODLE_URL=http://localhost:8080 -p 8080:80 yuchiu/moodle
+docker run -d --name DB -p 3306:3306 -e MYSQL_DATABASE=moodle -e MYSQL_ROOT_PASSWORD=moodle -e MYSQL_USER=moodle -e MYSQL_PASSWORD=moodle --volume db-volume:/var/lib/mysql mysql:5
+docker run -d -P --name moodle --link DB:DB -e MOODLE_URL=http://localhost:8080 -p 8080:80 --volume moodleapp-data jhardison/moodle
 ```
 
 You can visit the following URL in a browser to get started:
@@ -47,15 +39,15 @@ In the following steps, replace MOODLE_URL with your appropriate FQDN.
 
 * Deploy With Docker
 ```
-docker run -d --name DB -p 3306:3306 -e MYSQL_DATABASE=moodle -e MYSQL_ROOT_PASSWORD=moodle -e MYSQL_USER=moodle -e MYSQL_PASSWORD=moodle mysql:5
-docker run -d -P --name moodle --link DB:DB -e MOODLE_URL=http://moodle.company.com -p 80:80 yuchiu/moodle
+docker run -d --name DB -p 3306:3306 -e MYSQL_DATABASE=moodle -e MYSQL_ROOT_PASSWORD=moodle -e MYSQL_USER=moodle -e MYSQL_PASSWORD=moodle --volume db-volume:/var/lib/mysql mysql:5
+docker run -d -P --name moodle --link DB:DB -e MOODLE_URL=http://moodle.company.com -p 80:80 --volume moodleapp-data yuchiu/moodle
 ```
 
 * Deploy with Docker Compose
 
 Pull the latest source from GitHub:
 ```
-git clone https://github.com/yuchiu/docker-moodle.git
+git clone https://github.com/jhardison/docker-moodle.git
 ```
 
 Update the `moodle_variables.env` file with your information. Please note that we are using v3 compose files, as a stop gap link env variable are manually filled since v3 no longer automatically fills those for use.
@@ -64,6 +56,13 @@ Once the environment file is filled in you may bring up the service with:
 `docker-compose up -d`
 
 
+## Image Build
+
+```
+git clone https://github.com/yuchiu/docker-moodle
+cd docker-moodle
+docker build -t moodle .
+```
 
 ## Caveats
 The following aren't handled, considered, or need work: 
